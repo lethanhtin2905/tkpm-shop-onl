@@ -77,6 +77,23 @@ exports.registerHandle = (req, res) => {
     }
 }
 
+// Activate Account Page
+exports.activatePage = (req, res) => {
+    // Find user by ID
+    User.findOne({ _id: req.params.id })
+        .then(user => {
+            user.activated = true;
+            user.save();
+            res.render('pages/account/activate');
+        })
+        .catch(err => console.log(err));
+}
+
+// Profile Page
+exports.profile = (req, res) => {
+    res.render('pages/account/profile', { user: req.user });
+}
+
 // Login Page
 exports.loginPage = (req, res) => {
     res.render('pages/account/login');
