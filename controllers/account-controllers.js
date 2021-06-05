@@ -76,3 +76,17 @@ exports.registerHandle = (req, res) => {
             });
     }
 }
+
+// Login Page
+exports.loginPage = (req, res) => {
+    res.render('pages/account/login');
+}
+
+// Login Handle
+exports.loginHandle = (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/users/profile',
+        failureRedirect: '/users/login',
+        failureFlash: true
+    })(req, res, next);
+}
