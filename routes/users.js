@@ -9,4 +9,10 @@ router.get('/register', accountControllers.registerPage);
 // Register Handle
 router.post('/register', accountControllers.registerHandle);
 
+// Login Page
+router.get('/login', accountControllers.loginPage);
+
+// Login Handle
+router.post('/login', accountControllers.loginHandle);
+
 module.exports = router;
