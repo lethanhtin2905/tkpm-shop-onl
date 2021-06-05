@@ -16,6 +16,9 @@ var createError = require('http-errors');
 const ejsLint = require('ejs-lint');
 var Database = require('./db/database');
 
+// Passport config
+require('./config/passport')(passport);
+
 // router files
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
