@@ -94,6 +94,34 @@ exports.profile = (req, res) => {
     res.render('pages/account/profile', { user: req.user });
 }
 
+// Update Profile
+exports.updateProfile = (req, res) => {
+    let errors = [];
+    const newName = req.body.name;
+    const newPhone = req.body.phone;
+    const newAddress = req.body.address;
+
+    User.findOne({ _id: req.user._id }) // Find user by ID
+        .then(user => {
+            if (newName != '') {
+                user.name = newName;
+            }
+            if (newPhone != '') {
+                user.phone = newPhone;
+            }
+            if (newAddress != '') {
+                user.address = newAddress;
+            }
+            user.save()
+                .then(user => {
+                    req.flash('success_msg', 'Bạn đã cập nhật thành công');
+                    res.redirect('/users/profile');
+                })
+                .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+}
+
 // Login Page
 exports.loginPage = (req, res) => {
     res.render('pages/account/login');

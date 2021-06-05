@@ -12,6 +12,9 @@ router.post('/register', accountControllers.registerHandle);
 // Profile
 router.get('/profile', ensureAuthenticated, accountControllers.profile);
 
+// Update Profile
+router.post('/update-profile', accountControllers.updateProfile)
+
 // Login Page
 router.get('/login', accountControllers.loginPage);
 
