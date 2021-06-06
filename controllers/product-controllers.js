@@ -78,3 +78,55 @@ exports.displayProducts = (req, res) => {
 			throw err;
 		});
 }
+
+// Product Info
+exports.productInfo = (req, res) => {
+	const page = (typeof req.query.page != 'undefined') ? parseInt(req.query.page) : 1;
+	const commentsPerPage = 3;
+
+	// Find the product that matches ID and increase views by 1
+	Product.findOneAndUpdate({ _id: req.params.id }, { $inc: { 'views': 1 } }, { new: true, useFindAndModify: false })
+		.then(product => {
+			Comment.countDocuments({ productID: product._id }) // Count all comments that match product ID
+				.then(countAll => {
+					Comment.find({ productID: product._id })
+						.limit(commentsPerPage).skip((page - 1) * commentsPerPage) // Pagination
+						.then(comments => {
+							Product.find({ producer: product.producer }) // Find related products
+								.then(relatedProducts => {
+									res.render('pages/product/product', {
+										user: req.user,
+										product: product,
+										views: product.views + 1, // Actual views will increase later
+										priceConverter: functions.numberWithCommas,
+										// Comments
+										comments: comments,
+										// Creating page index
+										countPages: parseInt(countAll / commentsPerPage +
+											((countAll % commentsPerPage == 0) ? 0 : 1)),
+										page: page,
+										i: 1,
+										// Related products
+										products: relatedProducts
+									});
+								})
+								.catch(err => {
+									console.log('Error: ', err);
+									throw err;
+								});
+						})
+						.catch(err => {
+							console.log('Error: ', err);
+							throw err;
+						});
+				})
+				.catch(err => {
+					console.log('Error: ', err);
+					throw err;
+				});
+		})
+		.catch(err => {
+			console.log('Error: ', err);
+			throw err;
+		});
+}
