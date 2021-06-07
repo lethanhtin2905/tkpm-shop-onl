@@ -130,3 +130,74 @@ exports.productInfo = (req, res) => {
 			throw err;
 		});
 }
+
+// Advance Filter
+exports.filter = (req, res) => {
+	const category = (typeof req.body.category != 'undefined') ? (req.body.category) : '';
+	const producer = (typeof req.body.producer != 'undefined') ? (req.body.producer) : '';
+	const min = req.body.min;
+	const max = req.body.max;
+
+	let queryStr = '';
+	if (category != '') {
+		queryStr += ('category=' + category + '&');
+	}
+	if (producer != '') {
+		queryStr += ('producer=' + producer + '&');
+	}
+	queryStr += 'min=' + min + '&';
+	queryStr += 'max=' + max;
+	res.redirect('/store?' + queryStr);
+}
+
+// Search Result Page
+exports.searchPage = (req, res) => {
+	const name = req.query.name;
+	const category = (typeof req.query.category != 'undefined') ? (req.query.category) : '';
+	const count = (typeof req.query.count != 'undefined') ? parseInt(req.query.count) : 12;
+	const page = (typeof req.query.page != 'undefined') ? parseInt(req.query.page) : 1;
+
+	let queryParams = { $or: [{ name: new RegExp(name, "i") }] };
+	if (category != '') {
+		queryParams.category = category;
+	}
+
+	Product.countDocuments(queryParams) // Count all
+		.then(countAll => {
+			Product.find(queryParams).limit(count).skip((page - 1) * count) // Paginate
+				.then(products => {
+					res.render('pages/product/search', {
+						user: req.user,
+						products: products,
+						priceConverter: functions.numberWithCommas,
+						// Remain selections
+						name: name,
+						category: category,
+						count: count,
+						page: page,
+						// Create page index
+						countPages: parseInt(countAll / count +
+							((countAll % count == 0) ? 0 : 1)),
+						countAll: countAll
+					});
+				})
+				.catch(err => console.log(err));
+		})
+		.catch(err => console.log(err));
+}
+
+// Search Handle
+exports.searchHandle = (req, res) => {
+	const category = (typeof req.body.category != 'undefined') ? (req.body.category) : '';
+	const name = req.body.name;
+
+	let queryStr = 'name=' + name + '&';
+	if (category != '') {
+		queryStr += ('category=' + category + '&');
+	}
+	queryStr += ('count=12&page=1');
+
+	let redirect = '/search?' + queryStr;
+
+	res.redirect('/search?' + queryStr);
+}
