@@ -217,3 +217,8 @@ exports.searchHandle = (req, res) => {
 
 	res.redirect('/search?' + queryStr);
 }
+
+//Go to cart
+exports.cart = (req, res) => {
+	res.render('pages/order/cart', { user: req.user });
+}
