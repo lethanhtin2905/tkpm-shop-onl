@@ -131,6 +131,22 @@ exports.productInfo = (req, res) => {
 		});
 }
 
+// Product comment
+exports.comment = (req, res) => {
+	const productID = req.params.id;
+	const username = req.body.name;
+	const content = req.body.content;
+	const newComment = new Comment({ productID, username, content });
+	newComment.save()
+		.then(comment => {
+			res.redirect('/product/' + req.params.id);
+		})
+		.catch(err => {
+			console.log('Error: ', err);
+			throw err;
+		});
+}
+
 // Advance Filter
 exports.filter = (req, res) => {
 	const category = (typeof req.body.category != 'undefined') ? (req.body.category) : '';

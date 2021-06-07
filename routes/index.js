@@ -12,6 +12,9 @@ router.get('/product', productControllers.displayProducts);
 // Product Information
 router.get('/product/:id', productControllers.productInfo);
 
+// Post comment
+router.post('/product/comment/:id', productControllers.comment);
+
 // Search Result Page
 router.get('/search', productControllers.searchPage);
 
