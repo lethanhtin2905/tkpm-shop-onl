@@ -21,4 +21,7 @@ router.get('/login', accountControllers.loginPage);
 // Login Handle
 router.post('/login', accountControllers.loginHandle);
 
+// Checkout Page
+router.get('/checkout', ensureAuthenticated, accountControllers.checkoutPage);
+
 module.exports = router;
