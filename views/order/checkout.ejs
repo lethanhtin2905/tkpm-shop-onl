@@ -127,3 +127,62 @@
     <!-- /container -->
 </div>
 <!-- /SECTION -->
+
+<script>
+    // Get items
+    var items = JSON.parse(localStorage.getItem('itemsArray')) || [];
+    // Get shipping fee
+    var shippingFee = parseInt(localStorage.getItem('shippingFee')) || 0;
+    // Get order products
+    var orderProducts = document.getElementById('order-products');
+    // Get items input element for submitting
+    var inputItems = document.getElementById('items');
+
+    // Append each product node
+    var totalCost = 0;
+    items.forEach(entry => {
+        var newProduct = document.createElement('div');
+        newProduct.className = 'order-col';
+
+        var newRow = document.createElement('div');
+        newRow.innerHTML = entry.quantity + 'x ' + entry.name;
+        newProduct.appendChild(newRow);
+
+        var newCost = document.createElement('div');
+        newCost.innerHTML = priceConverter(entry.quantity * entry.price) + ' đ';
+        newProduct.appendChild(newCost);
+
+        orderProducts.appendChild(newProduct);
+
+        totalCost += entry.quantity * entry.price;
+
+        // Update inputItems
+        inputItems.value += ((entry.id + ';' + entry.name + ';' + entry.quantity) + '//');
+    });
+
+    // Set shipping fee element
+    document.getElementById('shipping-fee').innerHTML =
+        (shippingFee == 0) ? 'MIỄN PHÍ' : (priceConverter(shippingFee) + ' đ');
+
+    // Set total-cost element
+    document.getElementById('total-cost').innerHTML = priceConverter(totalCost + shippingFee) + ' đ';
+
+    // Set total input elements for submitting
+    document.getElementById('total').value = totalCost + shippingFee;
+
+    // Convert price from number to string with commas
+    function priceConverter(x) {
+        // Using regular expression
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    // Show or hide checkout button
+    function checkoutButton() {
+        var checkoutButton = document.getElementById('checkout-button');
+        if (checkoutButton.style.visibility == 'hidden') {
+            checkoutButton.style.visibility = 'visible';
+        } else {
+            checkoutButton.style.visibility = 'hidden';
+        }
+    }
+</script>
