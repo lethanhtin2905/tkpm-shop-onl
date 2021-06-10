@@ -18,12 +18,12 @@ var mailOptions = {
 // Models
 var User = require('../models/user');
 
-// Register Page
+// Register page
 exports.registerPage = (req, res) => {
     res.render('pages/account/register');
 }
 
-// Register Handle
+// Register handle
 exports.registerHandle = (req, res) => {
     const { name, email, password } = req.body;
     let errors = [];
@@ -77,7 +77,7 @@ exports.registerHandle = (req, res) => {
     }
 }
 
-// Activate Account Page
+// Activate account page
 exports.activatePage = (req, res) => {
     // Find user by ID
     User.findOne({ _id: req.params.id })
@@ -89,12 +89,12 @@ exports.activatePage = (req, res) => {
         .catch(err => console.log(err));
 }
 
-// Profile Page
+// Profile page
 exports.profile = (req, res) => {
     res.render('pages/account/profile', { user: req.user });
 }
 
-// Update Profile
+// Update profile
 exports.updateProfile = (req, res) => {
     let errors = [];
     const newName = req.body.name;
@@ -122,12 +122,12 @@ exports.updateProfile = (req, res) => {
         .catch(err => console.log(err));
 }
 
-// Login Page
+// Login page
 exports.loginPage = (req, res) => {
     res.render('pages/account/login');
 }
 
-// Login Handle
+// Login handle
 exports.loginHandle = (req, res, next) => {
     passport.authenticate('local', {
         successRedirect: '/users/profile',

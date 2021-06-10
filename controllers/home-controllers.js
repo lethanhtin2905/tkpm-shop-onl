@@ -1,6 +1,7 @@
 var Product = require('../models/product');
 var functions = require('./functions');
 
+// Show home page
 exports.index = (req, res) => {
     Product.find({})
 		.then(products => {
