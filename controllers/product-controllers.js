@@ -5,8 +5,7 @@ var Comment = require('../models/comment');
 // Function
 var functions = require('./functions');
 
-
-// Store
+// Store (show all products)
 exports.displayProducts = (req, res) => {
 	// Validate query string
 	const category = (typeof req.query.category != 'undefined') ? (req.query.category) : '';
@@ -79,7 +78,7 @@ exports.displayProducts = (req, res) => {
 		});
 }
 
-// Product Info
+// Product infomation
 exports.productInfo = (req, res) => {
 	const page = (typeof req.query.page != 'undefined') ? parseInt(req.query.page) : 1;
 	const commentsPerPage = 3;
@@ -147,7 +146,7 @@ exports.comment = (req, res) => {
 		});
 }
 
-// Advance Filter
+// Advance filter
 exports.filter = (req, res) => {
 	const category = (typeof req.body.category != 'undefined') ? (req.body.category) : '';
 	const producer = (typeof req.body.producer != 'undefined') ? (req.body.producer) : '';
@@ -166,7 +165,7 @@ exports.filter = (req, res) => {
 	res.redirect('/store?' + queryStr);
 }
 
-// Search Result Page
+// Search result page
 exports.searchPage = (req, res) => {
 	const name = req.query.name;
 	const category = (typeof req.query.category != 'undefined') ? (req.query.category) : '';
@@ -202,7 +201,7 @@ exports.searchPage = (req, res) => {
 		.catch(err => console.log(err));
 }
 
-// Search Handle
+// Search handle
 exports.searchHandle = (req, res) => {
 	const category = (typeof req.body.category != 'undefined') ? (req.body.category) : '';
 	const name = req.body.name;
