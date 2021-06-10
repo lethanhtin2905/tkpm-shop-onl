@@ -25,4 +25,7 @@ router.post('/search', productControllers.searchHandle);
 // Advance filter
 router.post('/store', productControllers.filter);
 
+// Cart
+router.get('/cart', productControllers.cart);
+
 module.exports = router;
