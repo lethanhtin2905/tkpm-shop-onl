@@ -23,4 +23,7 @@ router.get('/checkout', ensureAuthenticated, accountControllers.checkoutPage);
 // Checkout handle
 router.post('/checkout', orderControllers.checkoutHandle);
 
+// Order management
+router.get('/order-management', ensureAuthenticated, orderControllers.orderManagement);
+
 module.exports = router;
