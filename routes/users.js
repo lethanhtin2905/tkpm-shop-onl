@@ -26,4 +26,7 @@ router.post('/checkout', orderControllers.checkoutHandle);
 // Order management
 router.get('/order-management', ensureAuthenticated, orderControllers.orderManagement);
 
+// Track order
+router.get('/track-order/:id', ensureAuthenticated, orderControllers.trackOrder);
+
 module.exports = router;

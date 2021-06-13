@@ -1,7 +1,7 @@
 const functions = require('../controllers/functions');
 var Order = require('../models/order');
 
-// Checkout Handle
+// Checkout handle
 exports.checkoutHandle = (req, res) => {
     var tokens = req.body.items.split('//');
     tokens.pop(); // The last element is empty
@@ -31,7 +31,22 @@ exports.checkoutHandle = (req, res) => {
     res.redirect('/users/order-management');
 }
 
-// Order Management
+// Track order
+exports.trackOrder = (req, res) => {
+    const id = req.params.id;
+
+    Order.findOne({ _id: id })
+    .then(order => {
+        res.render('pages/order/track-order', {
+            user: req.user,
+            order: order,
+            priceConverter: functions.numberWithCommas
+        });
+    })
+    .catch(err => console.log(err));
+}
+
+// Order management
 exports.orderManagement = (req, res) => {
     Order.find({ userID: req.user._id })
         .then(orders => {
