@@ -135,3 +135,8 @@ exports.loginHandle = (req, res, next) => {
         failureFlash: true
     })(req, res, next);
 }
+
+// Checkout Page
+exports.checkoutPage = (req, res) => {
+    res.render('pages/order/checkout', { user: req.user });
+}
