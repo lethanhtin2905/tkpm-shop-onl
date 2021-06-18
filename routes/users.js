@@ -19,6 +19,11 @@ router.get('/login', accountControllers.loginPage);
 // Login handle
 router.post('/login', accountControllers.loginHandle);
 
+// Forget password page
+router.get('/forget-password', accountControllers.forgetPasswordPage);
+// Forget password handle
+router.post('/forget-password', accountControllers.forgetPasswordHandle);
+
 // Checkout page
 router.get('/checkout', ensureAuthenticated, accountControllers.checkoutPage);
 // Checkout handle

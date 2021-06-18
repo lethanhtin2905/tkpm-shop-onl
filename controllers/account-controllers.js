@@ -136,7 +136,46 @@ exports.loginHandle = (req, res, next) => {
     })(req, res, next);
 }
 
-// Checkout Page
+// Checkout page
 exports.checkoutPage = (req, res) => {
     res.render('pages/order/checkout', { user: req.user });
+}
+
+// Forget password page
+exports.forgetPasswordPage = (req, res) => {
+    res.render('pages/account/forget-password');
+}
+
+// Forget password handle
+exports.forgetPasswordHandle = (req, res) => {
+    // Get email
+    var email = req.body.email;
+
+    // Find user by email
+    User.findOne({ email: email })
+        .then(user => {
+            if (!user) {
+                req.flash('error_msg', 'Email chưa được đăng ký');
+                res.redirect('/users/forget-password');
+            } else {
+                // Configure mailOptions
+                mailOptions.to = email;
+                mailOptions.subject = 'Đặt lại mật khẩu';
+                mailOptions.text = 'Mã xác nhận của bạn: ' + user._id +
+                    '. Truy cập đường dẫn sau để đặt lại mật khẩu: ' +
+                    req.protocol + '://' + req.get('host') + '/users/reset-password?email=' + user.email;
+
+                // Send email
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                });
+
+                res.redirect('/users/reset-password?email=' + user.email);
+            }
+        })
+        .catch(err => console.log(err));
 }
