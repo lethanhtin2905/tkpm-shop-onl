@@ -136,11 +136,6 @@ exports.loginHandle = (req, res, next) => {
     })(req, res, next);
 }
 
-// Checkout page
-exports.checkoutPage = (req, res) => {
-    res.render('pages/order/checkout', { user: req.user });
-}
-
 // Forget password page
 exports.forgetPasswordPage = (req, res) => {
     res.render('pages/account/forget-password');
@@ -178,4 +173,47 @@ exports.forgetPasswordHandle = (req, res) => {
             }
         })
         .catch(err => console.log(err));
+}
+
+// Change password page
+exports.changePasswordPage = (req, res) => {
+    res.render('pages/account/change-password', { user: req.user });
+}
+
+// Change password handle
+exports.changePasswordHandle = (req, res) => {
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+
+    User.findOne({ _id: req.user._id }) // Find user by ID
+        .then(user => {
+            // Recheck old password
+            bcrypt.compare(oldPassword, user.password, (err, isMatch) => {
+                if (err) throw err;
+
+                if (isMatch) { // Match
+                    // Hash new password
+                    bcrypt.genSalt(10, (err, salt) =>
+                        bcrypt.hash(newPassword, salt, (err, hash) => {
+                            user.password = hash;
+                            // Save new password
+                            user.save()
+                                .then(user => {
+                                    req.flash('success_msg', 'Bạn đã đổi mật khẩu thành công');
+                                    res.redirect('/users/change-password');
+                                })
+                                .catch(err => console.log(err));
+                        }));
+                } else { // Not match
+                    req.flash('error_msg', 'Mật khẩu cũ không đúng');
+                    res.redirect('/users/change-password');
+                }
+            });
+        })
+        .catch(err => console.log(err));
+}
+
+// Checkout page
+exports.checkoutPage = (req, res) => {
+    res.render('pages/order/checkout', { user: req.user });
 }
