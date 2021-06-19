@@ -24,6 +24,11 @@ router.get('/forget-password', accountControllers.forgetPasswordPage);
 // Forget password handle
 router.post('/forget-password', accountControllers.forgetPasswordHandle);
 
+// Change password page
+router.get('/change-password', ensureAuthenticated, accountControllers.changePasswordPage);
+// Change password handle
+router.post('/change-password', accountControllers.changePasswordHandle);
+
 // Checkout page
 router.get('/checkout', ensureAuthenticated, accountControllers.checkoutPage);
 // Checkout handle
