@@ -29,6 +29,9 @@ router.get('/change-password', ensureAuthenticated, accountControllers.changePas
 // Change password handle
 router.post('/change-password', accountControllers.changePasswordHandle);
 
+// Reset password page
+router.get('/reset-password', accountControllers.resetPasswordPage);
+
 // Checkout page
 router.get('/checkout', ensureAuthenticated, accountControllers.checkoutPage);
 // Checkout handle
