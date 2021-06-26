@@ -213,6 +213,11 @@ exports.changePasswordHandle = (req, res) => {
         .catch(err => console.log(err));
 }
 
+// Reset password page
+exports.resetPasswordPage = (req, res) => {
+    res.render('pages/account/reset-password', { email: req.query.email });
+}
+
 // Checkout page
 exports.checkoutPage = (req, res) => {
     res.render('pages/order/checkout', { user: req.user });
