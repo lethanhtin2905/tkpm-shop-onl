@@ -2,21 +2,21 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const nodemailer = require('nodemailer');
 
+// Models
+var User = require('../models/user');
+
 // Configure nodemailer
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'electro@gmail.com',
-        pass: 'hcmus18120595'
+        user: "electroshop.hcmus@gmail.com",
+        pass: "hcmus18120595"
     }
 });
 
 var mailOptions = {
-    from: 'electro@gmail.com'
+    from: "electroshop.hcmus@gmail.com"
 };
-
-// Models
-var User = require('../models/user');
 
 // Register page
 exports.registerPage = (req, res) => {
@@ -57,7 +57,6 @@ exports.registerHandle = (req, res) => {
                                     mailOptions.subject = 'Kích hoạt tài khoản';
                                     mailOptions.text = 'Truy cập đường dẫn sau để kích hoạt tài khoản ' +
                                         req.protocol + '://' + req.get('host') + '/users/activate/' + user._id;
-
                                     // Send email
                                     transporter.sendMail(mailOptions, function (error, info) {
                                         if (error) {

@@ -9,6 +9,9 @@ router.get('/register', accountControllers.registerPage);
 // Register handle
 router.post('/register', accountControllers.registerHandle);
 
+// Activate 
+router.get('/activate/:id', accountControllers.activatePage);
+
 // Profile
 router.get('/profile', ensureAuthenticated, accountControllers.profile);
 // Update profile
