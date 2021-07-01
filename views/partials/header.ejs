@@ -30,7 +30,7 @@
             <div class="container">
                 <ul class="header-links pull-left">
                     <li><a href="#"><i class="fa fa-phone"></i> 9999999999</a></li>
-                    <li><a href="#"><i class="fa fa-envelope-o"></i> shopphukien.tttteam@gmail.com</a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o"></i> electroshop.hcmus@gmail.com</a></li>
                     <li><a href="#"><i class="fa fa-map-marker"></i> 227 Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh</a></li>
                 </ul>
                 <ul class="header-links pull-right">
@@ -176,3 +176,17 @@
         <!-- /container -->
     </nav>
     <!-- /NAVIGATION -->
+
+    <script>
+        // Get items
+        var items = JSON.parse(localStorage.getItem('itemsArray')) || [];
+
+        // Get cart quantity element
+        var cartQuantityIcon = document.getElementById('cart-quantity');
+
+        if (items.length > 0) {
+            cartQuantityIcon.innerHTML = items.length;
+        } else {
+            cartQuantityIcon.style.visibility = 'hidden';
+        }
+    </script>
