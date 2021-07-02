@@ -54,8 +54,8 @@ exports.registerHandle = (req, res) => {
                                 .then(user => {
                                     // Configure mailOptions
                                     mailOptions.to = email;
-                                    mailOptions.subject = 'Kích hoạt tài khoản';
-                                    mailOptions.text = 'Truy cập đường dẫn sau để kích hoạt tài khoản ' +
+                                    mailOptions.subject = 'Kích hoạt tài khoản Electro';
+                                    mailOptions.text = 'Để kích hoạt tài khoản, vui lòng truy cập đường dẫn sau: ' +
                                         req.protocol + '://' + req.get('host') + '/users/activate/' + user._id;
                                     // Send email
                                     transporter.sendMail(mailOptions, function (error, info) {

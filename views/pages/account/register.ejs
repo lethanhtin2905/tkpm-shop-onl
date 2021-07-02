@@ -1,7 +1,7 @@
 <div class="container">
     <div class="register">
         <h1>Đăng ký</h1>
-        <div class="mes-err-login"><%- include ("../../partials/messages") %></div>
+        <div class="mes-err-login"><%- include ('../../partials/messages') %></div>
         
         <form action="/users/register" method="POST" name="registerForm">
             <div class="form-group">
@@ -33,7 +33,7 @@
 <script>
     function check(input) {
         if (input.value != document.getElementById('password').value) {
-            input.setCustomValidity('Mật khẩu không khớp');
+            input.setCustomValidity('Mật khẩu không trùng khớp');
         } else {
             input.setCustomValidity('');
         }
