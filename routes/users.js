@@ -27,6 +27,9 @@ router.get('/forget-password', accountControllers.forgetPasswordPage);
 // Forget password handle
 router.post('/forget-password', accountControllers.forgetPasswordHandle);
 
+// Logout handle
+router.get('/logout', accountControllers.logoutHandle);
+
 // Change password page
 router.get('/change-password', ensureAuthenticated, accountControllers.changePasswordPage);
 // Change password handle

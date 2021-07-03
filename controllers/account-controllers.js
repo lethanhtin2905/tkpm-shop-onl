@@ -135,6 +135,13 @@ exports.loginHandle = (req, res, next) => {
     })(req, res, next);
 }
 
+// Logout handle
+exports.logoutHandle = (req, res) => {
+    req.logout();
+    req.flash('success_msg', 'Bạn đã đăng xuất');
+    res.redirect('/users/login');
+}
+
 // Forget password page
 exports.forgetPasswordPage = (req, res) => {
     res.render('pages/account/forget-password');
