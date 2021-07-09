@@ -41,7 +41,7 @@ router.get('/reset-password', accountControllers.resetPasswordPage);
 router.post('/reset-password', accountControllers.resetPasswordHandle);
 
 // Checkout page
-router.get('/checkout', ensureAuthenticated, accountControllers.checkoutPage);
+router.get('/checkout', ensureAuthenticated, orderControllers.checkoutPage);
 // Checkout handle
 router.post('/checkout', orderControllers.checkoutHandle);
 
