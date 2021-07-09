@@ -1,6 +1,10 @@
 const functions = require('../controllers/functions');
 var Order = require('../models/order');
 
+// Checkout page
+exports.checkoutPage = (req, res) => {
+    res.render('pages/order/checkout', { user: req.user });
+}
 // Checkout handle
 exports.checkoutHandle = (req, res) => {
     var tokens = req.body.items.split('//');

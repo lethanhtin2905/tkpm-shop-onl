@@ -253,8 +253,3 @@ exports.resetPasswordHandle = (req, res) => {
         })
         .catch(err => console.log(err));
 }
-
-// Checkout page
-exports.checkoutPage = (req, res) => {
-    res.render('pages/order/checkout', { user: req.user });
-}
